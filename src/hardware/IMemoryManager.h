@@ -14,7 +14,7 @@ namespace lc3_vm::hardware {
          * \param address address for reading
          * \return content of memory cell by `address` parameter
          */
-        uint16_t read(uint16_t address) noexcept ;
+        virtual uint16_t read(uint16_t address) = 0;
 
         /**
          * \brief Writes value to a memory cell
@@ -22,6 +22,8 @@ namespace lc3_vm::hardware {
          * \param val content to write
          * \return true if succeeds, false otherwise
          */
-        bool write(uint16_t address, uint16_t val) noexcept ;
+        virtual bool write(uint16_t address, uint16_t val) = 0;
+
+        virtual ~IMemoryManager() = default;
     };
 }
