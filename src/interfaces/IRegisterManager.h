@@ -3,6 +3,7 @@
 #include <cstddef>
 
 #include "hardware/RegistersSet.h"
+#include "common/Types.h"
 
 namespace lc3_vm::interfaces {
     /**
@@ -16,6 +17,8 @@ namespace lc3_vm::interfaces {
          * \param reg register
          * \param val value to set
          */
-        virtual void setVal(hardware::RegistersSet reg, std::byte val) = 0;
+        virtual void setVal(hardware::RegistersSet reg, common::Types::regval_t val) = 0;
+
+        virtual ~IRegisterManager() = default;
     };
 }
