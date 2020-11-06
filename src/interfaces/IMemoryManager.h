@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace lc3_vm::hardware {
+namespace lc3_vm::interfaces {
     /**
      * \interface IMemoryManager
      * \brief interface representing contract for MemoryManager impl

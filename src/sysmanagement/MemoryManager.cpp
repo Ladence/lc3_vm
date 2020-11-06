@@ -1,6 +1,6 @@
 #include "MemoryManager.h"
 
-using namespace lc3_vm::hardware;
+using namespace lc3_vm::sysmanagement;
 
 uint16_t MemoryManager::read(uint16_t address) {
     return 0;
