@@ -13,6 +13,7 @@ namespace lc3_vm::core {
      */
     class VirtualMachine {
         common::Types::instruction_t fetchInstruction();
+
     public:
         /**
          * \brief Constructs the VirtualMachine's object
@@ -31,11 +32,12 @@ namespace lc3_vm::core {
          * \brief Stops virtual machine
          */
         void halt();
+
     private:
         std::unique_ptr<interfaces::IRegisterManager> m_regManager;
         std::unique_ptr<interfaces::IMemoryManager> m_memManager;
 
-        std::atomic_flag m_running{ATOMIC_FLAG_INIT};
+        std::atomic_flag m_running = ATOMIC_FLAG_INIT;
     };
 
 }
