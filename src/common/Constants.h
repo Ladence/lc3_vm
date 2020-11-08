@@ -9,6 +9,6 @@ namespace lc3_vm::common {
      */
     class Constants {
     public:
-        static constexpr Types::regval_t START_POS = 0x3000;
+        static constexpr Types::regval_t START_POS = 0x3000; ///< Start position byte of Program Counter Register
     };
 }
