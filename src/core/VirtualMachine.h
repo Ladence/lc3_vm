@@ -17,8 +17,8 @@ namespace lc3_vm::core {
     public:
         /**
          * \brief Constructs the VirtualMachine's object
-         * @param regManager
-         * @param memManager
+         * \param regManager
+         * \param memManager
          */
         VirtualMachine(std::unique_ptr<interfaces::IRegisterManager> &&regManager,
                        std::unique_ptr<interfaces::IMemoryManager> &&memManager);
