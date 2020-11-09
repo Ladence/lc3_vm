@@ -20,3 +20,11 @@ RegisterManager::RegisterManager() {
     m_registers[hardware::RegistersSet::R_R6] = 0x0000;
     m_registers[hardware::RegistersSet::R_R7] = 0x0000;
 }
+
+std::optional<lc3_vm::common::Types::regval_t> RegisterManager::getVal(lc3_vm::hardware::RegistersSet reg) {
+    if (m_registers.find(reg) == m_registers.cend()) {
+        return std::nullopt;
+    }
+
+    return m_registers[reg];
+}

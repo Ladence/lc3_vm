@@ -12,9 +12,9 @@ namespace lc3_vm::interfaces {
         /**
          * \brief Reads the memory's cell content
          * \param address address for reading
-         * \return content of memory cell by `address` parameter
+         * \return content of memory cell by `address` parameter. It returns std::nullopt in case of failure (when address >= MEMORY_SIZE)
          */
-        virtual uint16_t read(uint16_t address) = 0;
+        virtual std::optional<uint16_t> read(uint16_t address) = 0;
 
         /**
          * \brief Writes value to a memory cell
