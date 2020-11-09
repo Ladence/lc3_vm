@@ -12,6 +12,8 @@ namespace lc3_vm::core {
      * \brief Class representing core class for Virtual Machine launching
      */
     class VirtualMachine {
+        bool loadImageFile(const std::string& imageFilePath) noexcept;
+
         common::Types::instruction_t fetchInstruction();
 
     public:

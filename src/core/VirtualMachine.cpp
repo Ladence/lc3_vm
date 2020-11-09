@@ -1,4 +1,9 @@
+#include <fstream>
+#include <vector>
+
 #include "VirtualMachine.h"
+#include "common/Utils.h"
+#include "common/Constants.h"
 
 using namespace lc3_vm::core;
 
@@ -35,4 +40,37 @@ lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction() {
     }
 
     return *instruction;
+}
+
+bool VirtualMachine::loadImageFile(const std::string &imageFilePath) noexcept {
+    std::ifstream ifs{imageFilePath, std::ios::binary};
+
+    if (!ifs.is_open()) {
+        return false;
+    }
+    std::uint16_t origin;
+    ifs >> origin;
+
+    constexpr bool isLittleEndian = common::Utils::isLittleEndian();
+
+    if constexpr (isLittleEndian) {
+        origin = common::Utils::bswap16(origin);
+    }
+
+    ifs.seekg(0, std::ios::end);
+    std::size_t buffSz = ifs.tellg();
+    ifs.seekg(sizeof origin, std::ios::beg);
+
+    std::vector<std::uint16_t> buffer(buffSz / 2);
+    ifs.read(reinterpret_cast<char*>(buffer.data()), buffSz);
+
+    for (std::size_t i = 0; i < buffer.size(); ++i) {
+        if constexpr (isLittleEndian) {
+            buffer[i] = common::Utils::bswap16(buffer[i]);
+        }
+
+        m_memManager->write(origin + i, buffer[i]);
+    }
+
+    return true;
 }
