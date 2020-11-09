@@ -31,5 +31,13 @@ namespace lc3_vm::common {
 
             return x;
         }
+
+        /**
+         * \brief Checks whenever system is Little endian or not (on compile-time)
+         * \return true if system is little endian, otherwise false
+         */
+        static constexpr inline bool isLittleEndian() {
+            return (0xFFFFFFFF & 1) == 0x00000001;
+        }
     };
 }
