@@ -16,12 +16,12 @@ namespace lc3_vm::sysmanagement {
         /**
          * \copydoc interfaces::IMemoryManager::read(uint16_t)
          */
-        std::optional<uint16_t> read(uint16_t address) override;
+        std::optional<uint16_t> read(uint16_t address) noexcept override;
 
         /**
          * \copydoc interfaces::IMemoryManager::write(uint16_t, uint16_t)
          */
-        bool write(uint16_t address, uint16_t val) override;
+        bool write(uint16_t address, uint16_t val) noexcept override;
 
         ~MemoryManager() override = default;
 
