@@ -1,5 +1,7 @@
 #pragma once
 
+#include "common/Types.h"
+
 namespace lc3_vm::interfaces {
     /**
      * \interface IInstructionExecutor
@@ -12,7 +14,7 @@ namespace lc3_vm::interfaces {
          * \param instruction instruction to execute
          * \warning This member function throws an exception if memory write fails
          */
-        virtual void execute(std::uint16_t instruction) = 0;
+        virtual void execute(common::Types::instruction_t instruction) = 0;
 
         virtual ~IInstructionExecutor() = default;
     };
