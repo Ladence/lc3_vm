@@ -26,6 +26,7 @@ namespace lc3_vm::sysmanagement {
          */
         std::optional<common::Types::regval_t> getVal(hardware::RegistersSet reg) override;
 
+        ~RegisterManager() override = default;
     private:
         std::unordered_map<hardware::RegistersSet, common::Types::regval_t> m_registers;
     };
