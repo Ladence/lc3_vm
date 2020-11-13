@@ -84,4 +84,6 @@ bool VirtualMachine::boot()
 {
     Singleton<RegisterManager>::create();
     Singleton<MemoryManager>::create();
+
+    return true;
 }

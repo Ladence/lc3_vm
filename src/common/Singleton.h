@@ -30,7 +30,7 @@ public:
             return;
         }
 
-        m_instancePtr = std::make_unique<T>(std::forward(args...));
+        m_instancePtr = std::make_unique<T>(std::forward(args)...);
     }
 
     /**
