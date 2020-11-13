@@ -2,14 +2,15 @@
 
 #include <unordered_map>
 
-#include "interfaces/IRegisterManager.h"
+#include "common/Types.h"
+#include "hardware/RegistersSet.h"
 
 namespace lc3_vm::sysmanagement {
 /**
  * \class RegisterManager
  * \implements interfaces::IRegisterManager
  */
-class RegisterManager : public interfaces::IRegisterManager
+class RegisterManager
 {
 public:
     /**
@@ -20,14 +21,12 @@ public:
     /**
      * \copydoc interfaces::IRegisterManager::setVal()
      */
-    void setVal(hardware::RegistersSet reg, common::Types::regval_t val) override;
+    void setVal(hardware::RegistersSet reg, common::Types::regval_t val);
 
     /**
      * \copydoc interfaces::IRegisterManager::getVal()
      */
-    std::optional<common::Types::regval_t> getVal(hardware::RegistersSet reg) override;
-
-    ~RegisterManager() override = default;
+    std::optional<common::Types::regval_t> getVal(hardware::RegistersSet reg);
 
 private:
     std::unordered_map<hardware::RegistersSet, common::Types::regval_t> m_registers;

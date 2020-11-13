@@ -3,17 +3,14 @@
 
 #include "VirtualMachine.h"
 #include "common/Constants.h"
+#include "common/Singleton.h"
 #include "common/Utils.h"
+#include "sysmanagement/MemoryManager.h"
+#include "sysmanagement/RegisterManager.h"
 
 using namespace lc3_vm::core;
-
-VirtualMachine::VirtualMachine(std::unique_ptr<interfaces::IRegisterManager>&& regManager,
-                               std::unique_ptr<interfaces::IMemoryManager>&& memManager)
-    : m_regManager{ std::move(regManager) }
-    , m_memManager{ std::move(memManager) }
-{
-    m_running.test_and_set(std::memory_order_relaxed);
-}
+using namespace lc3_vm::common;
+using namespace lc3_vm::sysmanagement;
 
 void VirtualMachine::halt()
 {
@@ -29,16 +26,19 @@ void VirtualMachine::launch()
 
 lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction()
 {
-    auto pcCurrState = m_regManager->getVal(hardware::RegistersSet::R_PC);
+    auto& regManager = Singleton<RegisterManager>::get();
+    auto& memManager = Singleton<MemoryManager>::get();
+
+    auto pcCurrState = regManager.getVal(hardware::RegistersSet::R_PC);
 
     if (!pcCurrState) {
         throw std::runtime_error("Something went wrong with PC Register!");
     }
 
     ++*pcCurrState;
-    m_regManager->setVal(hardware::RegistersSet::R_PC, *pcCurrState);
+    regManager.setVal(hardware::RegistersSet::R_PC, *pcCurrState);
 
-    auto instruction = m_memManager->read(*pcCurrState);
+    auto instruction = memManager.read(*pcCurrState);
     if (!instruction) {
         throw std::runtime_error("Something went wrong when trying to fetch instruction from memory!");
     }
@@ -56,7 +56,7 @@ bool VirtualMachine::loadImageFile(const std::string& imageFilePath) noexcept
     std::uint16_t origin;
     ifs >> origin;
 
-    constexpr bool isLittleEndian = common::Utils::isLittleEndian();
+    constexpr bool isLittleEndian = Utils::isLittleEndian();
 
     if constexpr (isLittleEndian) {
         origin = common::Utils::bswap16(origin);
@@ -71,11 +71,17 @@ bool VirtualMachine::loadImageFile(const std::string& imageFilePath) noexcept
 
     for (std::size_t i = 0; i < buffer.size(); ++i) {
         if constexpr (isLittleEndian) {
-            buffer[i] = common::Utils::bswap16(buffer[i]);
+            buffer[i] = Utils::bswap16(buffer[i]);
         }
 
-        m_memManager->write(origin + i, buffer[i]);
+        Singleton<MemoryManager>::get().write(origin + i, buffer[i]);
     }
 
     return true;
+}
+
+bool VirtualMachine::boot()
+{
+    Singleton<RegisterManager>::create();
+    Singleton<MemoryManager>::create();
 }

@@ -37,7 +37,7 @@ public:
      * \brief Gets underlying object
      * \return raw pointer to underlying object
      */
-    static inline T* get()
+    static inline T& get()
     {
         if (!m_instancePtr) {
             throw std::runtime_error("Instance hasn't been initialized yet!");
@@ -47,6 +47,6 @@ public:
     }
 
 private:
-    static std::unique_ptr<T> m_instancePtr = nullptr;
+    static inline std::unique_ptr<T> m_instancePtr = nullptr;
 };
 }

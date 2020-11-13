@@ -2,8 +2,7 @@
 
 #include <memory>
 
-#include "interfaces/IMemoryManager.h"
-#include "interfaces/IRegisterManager.h"
+#include "common/Types.h"
 
 namespace lc3_vm::core {
 
@@ -19,17 +18,15 @@ class VirtualMachine
 
 public:
     /**
-     * \brief Constructs the VirtualMachine's object
-     * \param regManager
-     * \param memManager
-     */
-    VirtualMachine(std::unique_ptr<interfaces::IRegisterManager>&& regManager,
-                   std::unique_ptr<interfaces::IMemoryManager>&& memManager);
-
-    /**
      * \brief Launches virtual machine's work
      */
     void launch();
+
+    /**
+     * \brief initializes resources for virtual machine
+     * \return true if initialization has been succeed, otherwise false
+     */
+    bool boot();
 
     /**
      * \brief Stops virtual machine
@@ -37,9 +34,6 @@ public:
     void halt();
 
 private:
-    std::unique_ptr<interfaces::IRegisterManager> m_regManager;
-    std::unique_ptr<interfaces::IMemoryManager> m_memManager;
-
     std::atomic_flag m_running = ATOMIC_FLAG_INIT;
 };
 
