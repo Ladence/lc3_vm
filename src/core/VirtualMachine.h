@@ -2,44 +2,45 @@
 
 #include <memory>
 
-#include "interfaces/IRegisterManager.h"
 #include "interfaces/IMemoryManager.h"
+#include "interfaces/IRegisterManager.h"
 
 namespace lc3_vm::core {
 
+/**
+ * \class VirtualMachine
+ * \brief Class representing core class for Virtual Machine launching
+ */
+class VirtualMachine
+{
+    bool loadImageFile(const std::string& imageFilePath) noexcept;
+
+    common::Types::instruction_t fetchInstruction();
+
+public:
     /**
-     * \class VirtualMachine
-     * \brief Class representing core class for Virtual Machine launching
+     * \brief Constructs the VirtualMachine's object
+     * \param regManager
+     * \param memManager
      */
-    class VirtualMachine {
-        bool loadImageFile(const std::string& imageFilePath) noexcept;
+    VirtualMachine(std::unique_ptr<interfaces::IRegisterManager>&& regManager,
+                   std::unique_ptr<interfaces::IMemoryManager>&& memManager);
 
-        common::Types::instruction_t fetchInstruction();
+    /**
+     * \brief Launches virtual machine's work
+     */
+    void launch();
 
-    public:
-        /**
-         * \brief Constructs the VirtualMachine's object
-         * \param regManager
-         * \param memManager
-         */
-        VirtualMachine(std::unique_ptr<interfaces::IRegisterManager> &&regManager,
-                       std::unique_ptr<interfaces::IMemoryManager> &&memManager);
+    /**
+     * \brief Stops virtual machine
+     */
+    void halt();
 
-        /**
-         * \brief Launches virtual machine's work
-         */
-        void launch();
+private:
+    std::unique_ptr<interfaces::IRegisterManager> m_regManager;
+    std::unique_ptr<interfaces::IMemoryManager> m_memManager;
 
-        /**
-         * \brief Stops virtual machine
-         */
-        void halt();
-
-    private:
-        std::unique_ptr<interfaces::IRegisterManager> m_regManager;
-        std::unique_ptr<interfaces::IMemoryManager> m_memManager;
-
-        std::atomic_flag m_running = ATOMIC_FLAG_INIT;
-    };
+    std::atomic_flag m_running = ATOMIC_FLAG_INIT;
+};
 
 }

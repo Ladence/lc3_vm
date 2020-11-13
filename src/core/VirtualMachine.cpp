@@ -2,29 +2,33 @@
 #include <vector>
 
 #include "VirtualMachine.h"
-#include "common/Utils.h"
 #include "common/Constants.h"
+#include "common/Utils.h"
 
 using namespace lc3_vm::core;
 
-VirtualMachine::VirtualMachine(std::unique_ptr<interfaces::IRegisterManager> &&regManager,
-                               std::unique_ptr<interfaces::IMemoryManager> &&memManager) : m_regManager{
-        std::move(regManager)}, m_memManager{std::move(memManager)} {
+VirtualMachine::VirtualMachine(std::unique_ptr<interfaces::IRegisterManager>&& regManager,
+                               std::unique_ptr<interfaces::IMemoryManager>&& memManager)
+    : m_regManager{ std::move(regManager) }
+    , m_memManager{ std::move(memManager) }
+{
     m_running.test_and_set(std::memory_order_relaxed);
-
 }
 
-void VirtualMachine::halt() {
+void VirtualMachine::halt()
+{
     m_running.clear(std::memory_order_relaxed);
 }
 
-void VirtualMachine::launch() {
+void VirtualMachine::launch()
+{
     while (m_running.test_and_set()) {
         auto instr = fetchInstruction();
     }
 }
 
-lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction() {
+lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction()
+{
     auto pcCurrState = m_regManager->getVal(hardware::RegistersSet::R_PC);
 
     if (!pcCurrState) {
@@ -42,8 +46,9 @@ lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction() {
     return *instruction;
 }
 
-bool VirtualMachine::loadImageFile(const std::string &imageFilePath) noexcept {
-    std::ifstream ifs{imageFilePath, std::ios::binary};
+bool VirtualMachine::loadImageFile(const std::string& imageFilePath) noexcept
+{
+    std::ifstream ifs{ imageFilePath, std::ios::binary };
 
     if (!ifs.is_open()) {
         return false;

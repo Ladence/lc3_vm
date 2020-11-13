@@ -1,21 +1,23 @@
 #pragma once
 
-#include "interfaces/IInstruction.h"
 #include "common/Utils.h"
+#include "interfaces/IInstruction.h"
 
 namespace lc3_vm::instructions {
-    /**
-     * \class AddInstruction
-     * \brief implementation of ADD instruction handler
-     */
-class AddInstruction : public interfaces::IInstruction {
+/**
+ * \class AddInstruction
+ * \brief implementation of ADD instruction handler
+ */
+class AddInstruction : public interfaces::IInstruction
+{
 public:
     /**
      * \copydoc interfaces::IInstruction
      */
-    inline void operator()(common::Types::instruction_t instruction) override {
-        common::Types::regval_t  r0 = (instruction >> 9) & 0x7; // destination register
-        common::Types::regval_t r1 = (instruction >> 6) & 0x7; // first operand
+    inline void operator()(common::Types::instruction_t instruction) override
+    {
+        common::Types::regval_t r0 = (instruction >> 9) & 0x7;      // destination register
+        common::Types::regval_t r1 = (instruction >> 6) & 0x7;      // first operand
         common::Types::regval_t immFlag = (instruction >> 5) & 0x1; // immediate mode
 
         if (immFlag) {
