@@ -31,14 +31,10 @@ lc3_vm::common::Types::instruction_t VirtualMachine::fetchInstruction()
 
     auto pcCurrState = regManager.getVal(hardware::RegistersSet::R_PC);
 
-    if (!pcCurrState) {
-        throw std::runtime_error("Something went wrong with PC Register!");
-    }
+    ++pcCurrState;
+    regManager.setVal(hardware::RegistersSet::R_PC, pcCurrState);
 
-    ++*pcCurrState;
-    regManager.setVal(hardware::RegistersSet::R_PC, *pcCurrState);
-
-    auto instruction = memManager.read(*pcCurrState);
+    auto instruction = memManager.read(pcCurrState);
     if (!instruction) {
         throw std::runtime_error("Something went wrong when trying to fetch instruction from memory!");
     }

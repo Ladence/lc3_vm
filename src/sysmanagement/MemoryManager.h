@@ -16,11 +16,13 @@ class MemoryManager
 public:
     /**
      * \copydoc interfaces::IMemoryManager::read(uint16_t)
+     * todo: fix doc
      */
     std::optional<uint16_t> read(uint16_t address) noexcept;
 
     /**
      * \copydoc interfaces::IMemoryManager::write(uint16_t, uint16_t)
+     * todo: fix doc
      */
     bool write(uint16_t address, uint16_t val) noexcept;
 
