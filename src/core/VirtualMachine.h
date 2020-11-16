@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "common/Types.h"
+#include "interfaces/IInstructionExecutor.h"
 
 namespace lc3_vm::core {
 
@@ -34,6 +35,8 @@ public:
     void halt();
 
 private:
+    std::unique_ptr<interfaces::IInstructionExecutor> m_instructionExecutor;
+
     std::atomic_flag m_running = ATOMIC_FLAG_INIT;
 };
 

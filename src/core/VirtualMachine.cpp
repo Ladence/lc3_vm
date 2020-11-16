@@ -5,6 +5,7 @@
 #include "common/Constants.h"
 #include "common/Singleton.h"
 #include "common/Utils.h"
+#include "instructions/InstructionExecutor.h"
 #include "sysmanagement/MemoryManager.h"
 #include "sysmanagement/RegisterManager.h"
 
@@ -21,6 +22,8 @@ void VirtualMachine::launch()
 {
     while (m_running.test_and_set()) {
         auto instr = fetchInstruction();
+
+        m_instructionExecutor->execute(instr);
     }
 }
 
@@ -80,6 +83,10 @@ bool VirtualMachine::boot()
 {
     Singleton<RegisterManager>::create();
     Singleton<MemoryManager>::create();
+
+    m_instructionExecutor = std::make_unique<instructions::InstructionExecutor>();
+
+    m_running.test_and_set(std::memory_order_relaxed);
 
     return true;
 }

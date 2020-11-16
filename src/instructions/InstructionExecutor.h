@@ -16,7 +16,7 @@ namespace lc3_vm::instructions {
  */
 class InstructionExecutor : public interfaces::IInstructionExecutor
 {
-    hardware::InstructionsSet getInstructionType(common::Types::instruction_t instruction);
+    static hardware::InstructionsSet getInstructionType(common::Types::instruction_t instruction);
 
 public:
     /**
