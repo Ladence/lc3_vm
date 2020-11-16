@@ -9,7 +9,7 @@ namespace lc3_vm {
  * \implements interfaces::IInstruction
  * \brief implementation of bitwise AND instruction
  */
-class AndInstruction : public interfaces::IInstruction
+class BitwiseAndInstruction : public interfaces::IInstruction
 {
 public:
     /**
@@ -32,6 +32,6 @@ public:
         // todo: regMngr.updateFlag()
     }
 
-    ~AndInstruction() override = default;
+    ~BitwiseAndInstruction() override = default;
 };
 }
