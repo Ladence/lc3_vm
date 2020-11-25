@@ -14,7 +14,7 @@ class AddInstruction : public interfaces::IInstruction
 {
 public:
     /**
-     * \copydoc interfaces::IInstruction
+     * \copydoc interfaces::IInstruction::operator()(common::Types::instruction_t)
      */
     inline void operator()(common::Types::instruction_t instruction) override
     {
