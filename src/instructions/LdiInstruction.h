@@ -18,7 +18,7 @@ public:
     /**
      * \copydoc interfaces::IInstruction::operator()(common::Types::instruction_t)
      */
-    void operator()(common::Types::instruction_t instruction) override
+    inline void operator()(common::Types::instruction_t instruction) override
     {
         auto& memManager = common::Singleton<sysmanagement::MemoryManager>::get();
         auto& regManager = common::Singleton<sysmanagement::RegisterManager>::get();

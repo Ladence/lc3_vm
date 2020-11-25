@@ -30,6 +30,10 @@ public:
      */
     lc3_vm::common::Types::regval_t getVal(hardware::RegistersSet reg);
 
+    /**
+     * \brief Updates conditional flag in registers set (R_COND) depending on the value in reg
+     * \param reg pivot value for conditional flag update
+     */
     void updateRCond(hardware::RegistersSet reg) noexcept;
 
 private:
