@@ -1,5 +1,6 @@
 #include <fstream>
 #include <vector>
+#include <stdexcept>
 
 #include "VirtualMachine.h"
 #include "common/Constants.h"
