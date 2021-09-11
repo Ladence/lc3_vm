@@ -13,6 +13,12 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 
 SET(ROOT_DIR ../)
+FILE(GLOB_RECURSE VM_SRC ${ROOT_DIR}/src/common/*.src
+        ${ROOT_DIR}/src/core/*.cpp
+        ${ROOT_DIR}/src/hardware/*.cpp
+        ${ROOT_DIR}/src/instructions/*.cpp
+        ${ROOT_DIR}/src/interfaces/*.cpp
+        ${ROOT_DIR}/src/sysmanagement/*.cpp)
 FILE(GLOB_RECURSE SRC src/*.cpp src/*.h ${ROOT_DIR}/src/*.cpp)
 INCLUDE_DIRECTORIES(${ROOT_DIR}/src)
 
