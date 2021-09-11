@@ -19,8 +19,8 @@ FILE(GLOB_RECURSE VM_SRC ${ROOT_DIR}/src/common/*.src
         ${ROOT_DIR}/src/instructions/*.cpp
         ${ROOT_DIR}/src/interfaces/*.cpp
         ${ROOT_DIR}/src/sysmanagement/*.cpp)
-FILE(GLOB_RECURSE SRC src/*.cpp src/*.h ${ROOT_DIR}/src/*.cpp)
+FILE(GLOB_RECURSE SRC src/*.cpp src/*.h)
 INCLUDE_DIRECTORIES(${ROOT_DIR}/src)
 
-ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
+ADD_EXECUTABLE(${PROJECT_NAME} ${SRC} ${VM_SRC})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${CONAN_LIBS})
