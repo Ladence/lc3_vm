@@ -94,5 +94,5 @@ jobs:
         run: |
           cmake --build build --config ${{ matrix.config.build_type }}
           ls
-          cd bin
+          cd build/bin
           ./lc3_vm_tests
