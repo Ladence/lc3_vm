@@ -60,6 +60,7 @@ jobs:
           choco install ninja cmake conan
           ninja --version
           cmake --version
+          refreshenv
           conan --version
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
