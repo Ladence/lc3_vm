@@ -89,10 +89,12 @@ jobs:
             -S .. \
             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
             -G "${{ matrix.config.generators }}"
-      - name: Build & Test
+      - name: Build
         shell: bash
         run: |
           cmake --build build --config ${{ matrix.config.build_type }}
-          ls
+      - name: Test
+        shell: bash
+        run: |
           cd build/bin
           ./lc3_vm_tests
