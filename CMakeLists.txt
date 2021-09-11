@@ -10,10 +10,13 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
-
 SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 
 FILE(GLOB_RECURSE SRC src/*.cpp src/*.h)
 INCLUDE_DIRECTORIES(src/)
 
+INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)  # Includes the contents of the conanbuildinfo.cmake file.
+conan_basic_setup()  # Prepares the CMakeList.txt for Conan.
+
+ADD_SUBDIRECTORY(test)
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
