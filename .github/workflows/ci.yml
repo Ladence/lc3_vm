@@ -61,7 +61,6 @@ jobs:
           ninja --version
           cmake --version
           refreshenv
-          path
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
         run: |
