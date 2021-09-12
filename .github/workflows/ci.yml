@@ -61,7 +61,8 @@ jobs:
           ninja --version
           cmake --version
           refreshenv
-          ls 'C:\Program Files\Conan\conan'
+          setx PATH "C:\Program Files\Conan\conan;%PATH%"
+          conan --version
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
         run: |
