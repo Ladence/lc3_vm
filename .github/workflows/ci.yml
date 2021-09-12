@@ -61,6 +61,7 @@ jobs:
           ninja --version
           cmake --version
           refreshenv
+          echo %PATH%
           conan --version
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
