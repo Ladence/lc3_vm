@@ -61,7 +61,7 @@ jobs:
           ninja --version
           cmake --version
           refreshenv
-          ls 'C:\Program Files\Conan\'
+          ls 'C:\Program Files\Conan\conan'
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
         run: |
