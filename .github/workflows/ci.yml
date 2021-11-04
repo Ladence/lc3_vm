@@ -21,15 +21,6 @@ jobs:
       matrix:
         config:
           - {
-            name: "Windows Latest MSVC",
-            os: windows-latest,
-            build_type: "Debug",
-            cc: "cl",
-            cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-            generators: "Visual Studio 16 2019"
-          }
-          - {
             name: "Ubuntu Latest GCC",
             os: ubuntu-latest,
             build_type: "Debug",
@@ -54,16 +45,6 @@ jobs:
         run: |
           echo github.event.action: ${{ github.event.action }}
           echo github.event_name: ${{ github.event_name }}
-      - name: Install dependencies on windows
-        if: startsWith(matrix.config.os, 'windows')
-        run: |
-          choco install ninja cmake conan
-          ninja --version
-          cmake --version
-          refreshenv
-          setx PATH "C:\Program Files\Conan\conan;%PATH%"
-          ls "C:\Program Files\Conan\conan"
-          "C:\Program Files\Conan\conan\conan.exe" --version
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
         run: |
@@ -82,15 +63,26 @@ jobs:
           cmake --version
           conan --version
 
-      - name: Configure
+      - name: Configure on Mac
         shell: bash
+        if: startsWith(matrix.config.os, 'macos')
         run: |
           mkdir build && cd build
-          conan install .. -s compiler.libcxx=libstdc++11
+          conan install ..
           cmake \
             -S .. \
             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
             -G "${{ matrix.config.generators }}"
+      - name: Configure on Ubuntu
+        shell: bash
+        if: startsWith(matrix.config.os, 'Ubuntu Latest GCC')
+        run: |
+           mkdir build && cd build
+           conan install .. -s compiler.libcxx=libstdc++11
+           cmake \
+             -S .. \
+             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
+             -G "${{ matrix.config.generators }}"
       - name: Build
         shell: bash
         run: |
