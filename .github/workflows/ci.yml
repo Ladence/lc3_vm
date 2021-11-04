@@ -63,7 +63,7 @@ jobs:
           refreshenv
           setx PATH "C:\Program Files\Conan\conan;%PATH%"
           ls "C:\Program Files\Conan\conan"
-          C:\Program Files\Conan\conan\conan.exe --version
+          C:\Program\ Files\Conan\conan\conan.exe --version
       - name: Install dependencies on ubuntu
         if: startsWith(matrix.config.name, 'Ubuntu Latest GCC')
         run: |
