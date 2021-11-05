@@ -18,23 +18,17 @@ public:
      * \brief Launches virtual machine's work
      */
     void launch();
+
     /**
      * \brief initializes resources for virtual machine
      * \return true if initialization has been succeed, otherwise false
      */
     bool boot();
+
     /**
      * \brief Stops virtual machine
      */
     void halt();
-
-protected:
-    /**
-     * \brief Fetches instruction using R_PC register
-     * \details virtual member function for overloading in case of extended Virtual Machine (Template Method pattern)
-     * \return next instruction to execute
-     */
-    virtual common::Types::instruction_t fetchInstruction();
 
     /**
      * \brief Loads binary image into virtual machine's memory
@@ -43,7 +37,13 @@ protected:
      * \return true if load succeed, otherwise false
      */
     virtual bool loadImageFile(const std::string& imageFilePath) noexcept;
-
+protected:
+    /**
+     * \brief Fetches instruction using R_PC register
+     * \details virtual member function for overloading in case of extended Virtual Machine (Template Method pattern)
+     * \return next instruction to execute
+     */
+    virtual common::Types::instruction_t fetchInstruction();
 private:
     std::unique_ptr<interfaces::IInstructionExecutor> m_instructionExecutor;
 
