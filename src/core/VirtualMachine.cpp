@@ -24,7 +24,6 @@ void VirtualMachine::launch()
     while (m_running.test_and_set()) {
         auto instr = fetchInstruction();
 
-        // nop mock for now (todo: implement separate instruction)
         if (instr != 0)
         {
             m_instructionExecutor->execute(instr);

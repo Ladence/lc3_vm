@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "common/Singleton.h"
 #include "common/Utils.h"
 #include "interfaces/IInstruction.h"

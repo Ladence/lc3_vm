@@ -4,10 +4,10 @@
 
 namespace lc3_vm::hardware {
 /**
- * \enum InstructionsSet
+ * \enum InstructionType
  * \brief consists of LC3's ISA
  */
-enum class InstructionsSet : std::uint8_t
+enum class InstructionType : std::uint8_t
 {
     OP_BR = 0, ///< branch
     OP_ADD,    ///< add
@@ -24,6 +24,7 @@ enum class InstructionsSet : std::uint8_t
     OP_JMP,    ///< jump
     OP_RES,    ///< reserved (unused)
     OP_LEA,    ///< load effective address
-    OP_TRAP    ///< executive trap
+    OP_TRAP,   ///< executive trap
+    OP_NOP     ///< NOP
 };
 }

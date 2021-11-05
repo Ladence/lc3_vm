@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <unordered_map>
 
-#include "hardware/InstructionsSet.h"
+#include "hardware/InstructionType.h"
 #include "interfaces/IInstruction.h"
 #include "interfaces/IInstructionExecutor.h"
 
@@ -16,7 +16,7 @@ namespace lc3_vm::instructions {
  */
 class InstructionExecutor : public interfaces::IInstructionExecutor
 {
-    static hardware::InstructionsSet getInstructionType(common::Types::instruction_t instruction);
+    static hardware::InstructionType getInstructionType(common::Types::instruction_t instruction);
 
 public:
     /**
@@ -32,7 +32,7 @@ public:
     ~InstructionExecutor() override = default;
 
 private:
-    std::unordered_map<hardware::InstructionsSet, interfaces::IInstruction::ptr_t> m_instructionHandlers;
+    std::unordered_map<hardware::InstructionType, interfaces::IInstruction::ptr_t> m_instructionHandlers;
 };
 
 }

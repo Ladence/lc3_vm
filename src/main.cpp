@@ -14,7 +14,7 @@ namespace
 
 void sigHandler(int sig)
 {
-    if (sig == SIGKILL)
+    if (sig == SIGKILL || sig == SIGTERM)
     {
         // graceful
         std::cout << "Stopping Virtual Machine..." << std::endl;
