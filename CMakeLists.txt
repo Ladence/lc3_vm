@@ -20,3 +20,4 @@ conan_basic_setup()  # Prepares the CMakeList.txt for Conan.
 
 ADD_SUBDIRECTORY(test)
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} pthread)
