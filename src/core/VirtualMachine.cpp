@@ -16,7 +16,7 @@ using namespace lc3_vm::sysmanagement;
 
 void VirtualMachine::halt()
 {
-    m_running.clear(std::memory_order_relaxed);
+    m_running.clear();
 }
 
 void VirtualMachine::launch()

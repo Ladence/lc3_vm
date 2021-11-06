@@ -18,7 +18,6 @@ public:
      */
     inline void operator()(common::Types::instruction_t instruction) override
     {
-        LOG(INFO) << "NOP instruction..." << std::endl;
     }
 
     ~NopInstruction() override = default;

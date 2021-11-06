@@ -11,18 +11,25 @@ INITIALIZE_EASYLOGGINGPP
 
 namespace
 {
-    volatile std::sig_atomic_t g_Done = 0;
+    volatile std::atomic_flag g_Done = ATOMIC_FLAG_INIT;
 }
 
 void sigHandler(int sig)
 {
-    if (sig == SIGKILL || sig == SIGTERM)
-    {
         // graceful
         LOG(INFO) << "Stopping Virtual Machine..." << std::endl;
-        g_Done = 1;
-    }
+        g_Done.clear();
 }
+
+void initSignal()
+{
+    struct sigaction action{};
+    action.sa_handler = sigHandler;
+    sigemptyset(&action.sa_mask);
+    sigaction(SIGTERM, &action, NULL);
+    sigaction(SIGINT, &action, NULL);
+}
+
 int main(int argc, char** argv)
 {
     START_EASYLOGGINGPP(argc, argv);
@@ -32,7 +39,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    signal(SIGKILL, sigHandler);
+    initSignal();
 
     core::VirtualMachine vm;
     if (!vm.boot()) {
@@ -47,10 +54,13 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    g_Done.test_and_set();
     std::thread watchdog{[&vm](){
-            while (!g_Done)
+            constexpr std::uint8_t WATCHDOG_PERIOD_SEC = 5;
+            while (g_Done.test_and_set())
             {
-                std::this_thread::sleep_for(std::chrono::seconds{5});
+                LOG(INFO) << "VM is working";
+                std::this_thread::sleep_for(std::chrono::seconds{WATCHDOG_PERIOD_SEC});
             }
             vm.halt();
         }
