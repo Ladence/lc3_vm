@@ -1,11 +1,13 @@
-#include <iostream>
 #include <thread>
-
 #include <csignal>
+
+#include <easylogging++.h>
 
 #include "core/VirtualMachine.h"
 
 using namespace lc3_vm;
+
+INITIALIZE_EASYLOGGINGPP
 
 namespace
 {
@@ -17,15 +19,16 @@ void sigHandler(int sig)
     if (sig == SIGKILL || sig == SIGTERM)
     {
         // graceful
-        std::cout << "Stopping Virtual Machine..." << std::endl;
+        LOG(INFO) << "Stopping Virtual Machine..." << std::endl;
         g_Done = 1;
     }
 }
 int main(int argc, char** argv)
 {
+    START_EASYLOGGINGPP(argc, argv);
     if (argc < 2)
     {
-        std::cerr << "Usage: ./lc3_vm [path_to_executable_image]" << std::endl;
+        LOG(ERROR) << "Usage: ./lc3_vm [path_to_executable_image]" << std::endl;
         return 1;
     }
 
@@ -33,14 +36,14 @@ int main(int argc, char** argv)
 
     core::VirtualMachine vm;
     if (!vm.boot()) {
-        std::cerr << "Error on booting of virtual machine!" << std::endl;
+        LOG(ERROR) << "Error on booting of virtual machine!" << std::endl;
         return 1;
     }
 
-    std::cout << "Loading " << argv[1] << " image" << std::endl;
+    LOG(INFO) << "Loading " << argv[1] << " image" << std::endl;
     if (!vm.loadImageFile(argv[1]))
     {
-        std::cerr << "Error on loading executable image to virtual machine!" << std::endl;
+        LOG(ERROR) << "Error on loading executable image to virtual machine!" << std::endl;
         return 1;
     }
 

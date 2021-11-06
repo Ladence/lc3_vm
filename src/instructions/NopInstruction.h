@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <easylogging++.h>
 
 #include "interfaces/IInstruction.h"
 
@@ -18,7 +18,7 @@ public:
      */
     inline void operator()(common::Types::instruction_t instruction) override
     {
-        std::cout << "NOP instruction..." << std::endl;
+        LOG(INFO) << "NOP instruction..." << std::endl;
     }
 
     ~NopInstruction() override = default;

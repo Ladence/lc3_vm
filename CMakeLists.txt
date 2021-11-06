@@ -15,9 +15,13 @@ SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
 FILE(GLOB_RECURSE SRC src/*.cpp src/*.h)
 INCLUDE_DIRECTORIES(src/)
 
+# 3pp easyloggingpp
+INCLUDE_DIRECTORIES(3pp/easyloggingpp/src/)
+FILE(GLOB EASYLOGGING_SRC 3pp/easyloggingpp/src/easylogging++.cc)
+
 INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)  # Includes the contents of the conanbuildinfo.cmake file.
 conan_basic_setup()  # Prepares the CMakeList.txt for Conan.
 
 ADD_SUBDIRECTORY(test)
-ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
+ADD_EXECUTABLE(${PROJECT_NAME} ${SRC} ${EASYLOGGING_SRC})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} pthread)
