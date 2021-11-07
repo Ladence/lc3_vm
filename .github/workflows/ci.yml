@@ -38,12 +38,11 @@ jobs:
           }
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout main
+        uses: actions/checkout@v2
+      - name: Checkout submodules
+        uses: textbook/git-checkout-submodule-action@2.1.1
 
-      - name: Pull submodule
-        run: |
-          git submodule update --init
       - name: Print env
         run: |
           echo github.event.action: ${{ github.event.action }}
